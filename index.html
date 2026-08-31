@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07060a" />
+    <meta
+      name="description"
+      content="Phosphene is a camera art installation: closed-eye vision from an open camera, rendered in WebGL2."
+    />
+    <title>Phosphene</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="stage" aria-label="Phosphene field"></canvas>
+
+    <div id="fatal" hidden>
+      <p class="kicker">Cannot open</p>
+      <h1>This browser has no WebGL2.</h1>
+      <p>Phosphene needs a GPU context. Try a current Chrome, Firefox, Safari, or Edge.</p>
+    </div>
+
+    <div id="mast">
+      <p class="kicker">Installation</p>
+      <h1>Phosphene</h1>
+      <p class="lede">
+        The lights that live behind the eyelid — pressure blobs, Klüver lattices,
+        tunnels, afterimages, aura. The camera is optional: an open eye bleeding
+        into a closed one.
+      </p>
+      <div class="actions">
+        <button type="button" id="open-eye">Open the camera</button>
+        <button type="button" id="enter" class="ghost">Enter with eyelids closed</button>
+      </div>
+      <p class="fine" id="cam-status">Camera stays off until you allow it. Nothing is recorded or uploaded.</p>
+    </div>
+
+    <div id="hud" hidden>
+      <div class="hud-block">
+        <span id="mode-index">01</span>
+        <div>
+          <div id="mode-name">Pressure</div>
+          <div id="mode-note">Lights that appear when you press on the eyelid.</div>
+        </div>
+      </div>
+      <div class="hud-keys">
+        <span>1–5 programs</span>
+        <span>click / tap to cycle</span>
+        <span>hold space to press</span>
+        <span>H hide UI</span>
+      </div>
+    </div>
+
+    <div id="banner" hidden role="status"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

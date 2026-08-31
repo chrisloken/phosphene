@@ -1,0 +1,238 @@
+:root {
+  color-scheme: dark;
+  --void: #07060a;
+  --paper: #f3ead8;
+  --gold: #e4c48a;
+  --rose: #e8a0b4;
+  --mute: color-mix(in srgb, var(--paper) 58%, transparent);
+  --font-display: "Fraunces", "Palatino Linotype", Palatino, serif;
+  --font-ui: "IBM Plex Sans", "Gill Sans", "Trebuchet MS", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--void);
+  color: var(--paper);
+  font-family: var(--font-ui);
+}
+
+body {
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+#fatal,
+#mast,
+#hud,
+#banner {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#fatal {
+  inset: 0;
+  display: grid;
+  align-content: center;
+  padding: 8vw;
+  max-width: 42rem;
+}
+
+#fatal[hidden] {
+  display: none;
+}
+
+#mast {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right))
+    max(28px, env(safe-area-inset-bottom)) max(28px, env(safe-area-inset-left));
+  background: linear-gradient(180deg, transparent 0%, rgb(7 6 10 / 0.55) 38%, rgb(7 6 10 / 0.88) 100%);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+#mast.is-gone {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 12vw, 8.5rem);
+  letter-spacing: 0.14em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.lede {
+  margin: 0 0 28px;
+  max-width: 38rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-optical-sizing: auto;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--paper) 88%, var(--rose));
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+button {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--paper) 28%, transparent);
+  background: var(--paper);
+  color: var(--void);
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--paper);
+}
+
+button:hover {
+  border-color: var(--gold);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.fine {
+  margin: 16px 0 0;
+  max-width: 36rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--mute);
+}
+
+#hud {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: end;
+  padding: max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background: linear-gradient(180deg, transparent, rgb(7 6 10 / 0.72));
+  transition: opacity 280ms ease;
+}
+
+#hud[hidden] {
+  display: none;
+}
+
+#hud.is-dim {
+  opacity: 0;
+}
+
+.hud-block {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+#mode-index {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+
+#mode-name {
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+#mode-note {
+  margin-top: 4px;
+  max-width: 28rem;
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+
+.hud-keys {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+#banner {
+  top: max(16px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  background: rgb(7 6 10 / 0.72);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+#banner[hidden] {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  #hud {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hud-keys {
+    align-items: flex-start;
+  }
+
+  #banner {
+    white-space: normal;
+    max-width: calc(100% - 32px);
+    text-align: center;
+  }
+}
