@@ -4,7 +4,7 @@ A camera art installation: **closed-eye vision from an open camera**.
 
 Phosphene is a fullscreen WebGL2 field. It synthesizes the lights that appear when you press on an eyelid — pressure blobs, Klüver form constants (lattice, tunnel, spiral), retinal afterimages, and scintillating aura. A live camera is optional. When the eye is open, the world bleeds into the field. When it is closed, the piece keeps running from noise and memory. Nothing is recorded or uploaded.
 
-Live: [https://mixartist.github.io/phosphene/](https://mixartist.github.io/phosphene/)
+Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/phosphene/)
 
 ## Programs
 
@@ -45,9 +45,9 @@ From this directory (or `/agent/phosphene` if that path is linked):
 ./scripts/publish-github-pages.sh
 ```
 
-The script creates [mixartist/phosphene](https://github.com/mixartist/phosphene) if needed, pushes `main`, and deploys the production build to `gh-pages` so the site is served at `https://mixartist.github.io/phosphene/`.
+The script targets [chrisloken/phosphene](https://github.com/chrisloken/phosphene), pushes `main`, and deploys the production build to `gh-pages` so the site is served at `https://chrisloken.github.io/phosphene/`.
 
-It needs the GitHub CLI (`gh`) authenticated as **mixartist** with permission to create a public repository (`public_repo` on a classic token, or Administration + Contents + Pages on a fine-grained token).
+It needs the GitHub CLI (`gh`) authenticated as **chrisloken** with permission to push and to enable Pages. Override the owner with `GITHUB_PAGES_OWNER` if needed.
 
 ## Stack
 

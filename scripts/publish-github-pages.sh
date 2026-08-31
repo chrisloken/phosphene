@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Create mixartist/phosphene, push main, and deploy GitHub Pages.
+# Create chrisloken/phosphene (or $GITHUB_PAGES_OWNER/$GITHUB_PAGES_REPO),
+# push main, and deploy GitHub Pages.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-OWNER="${GITHUB_PAGES_OWNER:-mixartist}"
+OWNER="${GITHUB_PAGES_OWNER:-chrisloken}"
 REPO="${GITHUB_PAGES_REPO:-phosphene}"
 FULL="${OWNER}/${REPO}"
 PAGES_URL="https://${OWNER}.github.io/${REPO}/"
