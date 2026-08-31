@@ -86,10 +86,11 @@ h1 {
   margin: 0 0 16px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(3.4rem, 12vw, 8.5rem);
-  letter-spacing: 0.14em;
+  font-size: clamp(2.15rem, 10vw, 8.5rem);
+  letter-spacing: 0.1em;
   line-height: 0.9;
   text-transform: uppercase;
+  max-width: 100%;
 }
 
 .lede {
@@ -221,6 +222,16 @@ button:focus-visible {
 }
 
 @media (max-width: 720px) {
+  #mast {
+    padding: max(20px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  }
+
+  h1 {
+    font-size: clamp(2rem, 9.2vw, 3.4rem);
+    letter-spacing: 0.05em;
+  }
+
   #hud {
     flex-direction: column;
     align-items: flex-start;
