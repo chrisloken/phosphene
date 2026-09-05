@@ -126,10 +126,10 @@ PAGES_BODY="$(cat <<EOF
 {"source":{"branch":"${GH_PAGES_BRANCH}","path":"/"}}
 EOF
 )"
-if ! gh api "repos/${FULL}/pages" >/dev/null 2>&1; then
-  echo "$PAGES_BODY" | gh api -X POST "repos/${FULL}/pages" --input - >/dev/null
+if gh api "repos/${FULL}/pages" >/dev/null 2>&1; then
+  echo "$PAGES_BODY" | gh api --silent -X PUT "repos/${FULL}/pages" --input - >/dev/null || true
 else
-  echo "$PAGES_BODY" | gh api -X PUT "repos/${FULL}/pages" --input - >/dev/null || true
+  echo "$PAGES_BODY" | gh api --silent -X POST "repos/${FULL}/pages" --input - >/dev/null || true
 fi
 
 gh api -X PATCH "repos/${FULL}" \
