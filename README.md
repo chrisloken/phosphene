@@ -1,27 +1,27 @@
 # Phosphene
 
-A camera art installation: **closed-eye vision from an open camera**.
+A camera art installation: **closed-eye vision inside black frames**.
 
-Phosphene is a fullscreen WebGL2 field. It synthesizes the lights that appear when you press on an eyelid — pressure blobs, Klüver form constants (lattice, tunnel, spiral), retinal afterimages, and scintillating aura. A live camera is optional. When the eye is open, the world bleeds into the field. When it is closed, the piece keeps running from noise and memory. Nothing is recorded or uploaded.
+Phosphene is a fullscreen WebGL2 field built to sit with Ryan Rasmussen’s language — stacked armatures, neon, and glitch. The camera is optional. When the eye is open, the world shears into nested frames. When it is closed, the piece keeps running as dropped signal. Nothing is recorded or uploaded.
 
 Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/phosphene/)
 
 ## Programs
 
-1. **Pressure** — expanding rings and soft gold/magenta blobs
-2. **Lattice** — honeycomb / cobweb form constant
-3. **Spiral** — tunnel and funnel
-4. **Afterimage** — complementary burn of the camera (or a closed-eye stand-in)
-5. **Aura** — fortification spectra around a moving scotoma
+1. **Armature** — iridescent matter in a black cage, neon halo
+2. **Cubic** — extruded wireframe rooms
+3. **Transmission** — scanlines, punch cards, dropped signal
+4. **Static** — psychedelic dead air / corrupted broadcast
+5. **Undone** — architecture glitch, shatter, neon lightning
 
 ## Controls
 
 - Click or tap the field to cycle programs
 - Keys `1`–`5` jump to a program
-- Hold **space** (or press and hold) to increase eyelid pressure
+- Hold **space** (or press and hold) to increase interference
 - `H` hides the captions
 - `F` toggles fullscreen
-- **Open the camera** asks for `getUserMedia`. Deny it and the eyelids stay closed.
+- **Open the camera** asks for `getUserMedia`. Deny it and the field stays on dead air.
 
 ## Run locally
 

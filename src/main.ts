@@ -94,7 +94,7 @@ openEye.addEventListener("click", async () => {
     if (camStatus) {
       camStatus.textContent = "Camera open. Nothing is recorded.";
     }
-    showBanner("Eye open. The world bleeds into the field.");
+    showBanner("Channel open. The world shears into the frame.");
   } else {
     showBanner(camera.error ?? "Camera stayed closed.");
     if (camStatus) {

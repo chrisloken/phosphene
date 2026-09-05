@@ -7,33 +7,33 @@ export type Program = {
 
 export const PROGRAMS: readonly Program[] = [
   {
-    id: "pressure",
-    name: "Pressure",
+    id: "armature",
+    name: "Armature",
     index: "01",
-    note: "Lights that appear when you press on the eyelid.",
+    note: "Iridescent matter in a black cage — neon halo, dichroic film.",
   },
   {
-    id: "lattice",
-    name: "Lattice",
+    id: "cubic",
+    name: "Cubic",
     index: "02",
-    note: "Klüver form constant — honeycomb, checker, cobweb.",
+    note: "Extruded grid. Wireframe rooms stacking and slipping.",
   },
   {
-    id: "spiral",
-    name: "Spiral",
+    id: "transmission",
+    name: "Transmission",
     index: "03",
-    note: "Tunnel and funnel; the eye falling inward.",
+    note: "Scanlines, punch cards, dropped signal between stations.",
   },
   {
-    id: "afterimage",
-    name: "Afterimage",
+    id: "static",
+    name: "Static",
     index: "04",
-    note: "The world burned complementary onto the retina.",
+    note: "Psychedelic dead air. Afterimage as corrupted broadcast.",
   },
   {
-    id: "aura",
-    name: "Aura",
+    id: "undone",
+    name: "Undone",
     index: "05",
-    note: "Scintillating scotoma — fortification spectra at the edge of sight.",
+    note: "Architecture glitch — shatter, neon lightning, collapse/build.",
   },
 ];
