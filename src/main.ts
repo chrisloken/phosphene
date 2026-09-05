@@ -1,5 +1,6 @@
 import "./style.css";
 import { createCamera } from "./camera";
+import { createMotion } from "./motion";
 import { PROGRAMS } from "./programs";
 import { Renderer } from "./renderer";
 
@@ -34,6 +35,8 @@ try {
 }
 
 const camera = createCamera();
+const motion = createMotion();
+const armature = document.querySelector<HTMLElement>("#armature");
 let programIndex = 0;
 let hold = 0;
 let holdTarget = 0;
@@ -69,6 +72,7 @@ function enterField(): void {
   mast.classList.add("is-gone");
   hud.hidden = false;
   hud.classList.toggle("is-dim", !hudVisible);
+  void motion.requestAccess();
 }
 
 function setProgram(next: number): void {
@@ -181,13 +185,22 @@ function tick(now: number): void {
   }
   const time = (now - start) / 1000;
   hold += (holdTarget - hold) * 0.08;
+  const live = camera.status === "live";
+  const move = motion.sample(live ? camera.video : null, camera.mirror);
+  if (armature) {
+    armature.style.setProperty("--pan-x", move.panX.toFixed(4));
+    armature.style.setProperty("--pan-y", move.panY.toFixed(4));
+  }
   renderer.frame({
     time,
     mode: programIndex,
     intensity: 1,
     hold,
-    hasCamera: camera.status === "live",
+    hasCamera: live,
     mirror: camera.mirror,
+    panX: move.panX,
+    panY: move.panY,
+    energy: move.energy,
     video: camera.video,
   });
   requestAnimationFrame(tick);

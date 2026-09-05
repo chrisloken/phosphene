@@ -47,6 +47,10 @@ body {
     inset 0 0 0 2px #141414;
   pointer-events: none;
   z-index: 3;
+  --pan-x: 0;
+  --pan-y: 0;
+  transform: translate(calc(var(--pan-x) * 12px), calc(var(--pan-y) * 10px));
+  will-change: transform;
 }
 
 .strut {
@@ -60,7 +64,7 @@ body {
   height: 130%;
   left: 18%;
   top: -18%;
-  transform: rotate(18deg);
+  transform: rotate(18deg) translate(calc(var(--pan-x) * 18px), calc(var(--pan-y) * -12px));
 }
 
 .strut-b {
@@ -68,7 +72,7 @@ body {
   height: 140%;
   right: 24%;
   top: -22%;
-  transform: rotate(-28deg);
+  transform: rotate(-28deg) translate(calc(var(--pan-x) * -14px), calc(var(--pan-y) * 16px));
 }
 
 #fatal,

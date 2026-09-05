@@ -14,6 +14,8 @@ uniform float uIntensity;
 uniform float uHold;
 uniform float uHasCamera;
 uniform float uMirror;
+uniform vec2 uPan;
+uniform float uEnergy;
 
 const vec3 MAG = vec3(1.0, 0.04, 0.72);
 const vec3 CYN = vec3(0.0, 0.92, 1.0);
@@ -78,14 +80,15 @@ float luma(vec3 c) {
 }
 
 vec2 shearUv(vec2 uv, float t, float hold) {
-  float row = floor(uv.y * (28.0 + 40.0 * hold));
+  float jitter = hold + uEnergy * 0.85;
+  float row = floor(uv.y * (28.0 + 40.0 * jitter));
   float h = hash21(vec2(row, floor(t * 7.0)));
-  if (h > 0.86 - hold * 0.08) {
-    uv.x += (h - 0.93) * (0.18 + hold * 0.22);
+  if (h > 0.86 - jitter * 0.1) {
+    uv.x += (h - 0.93) * (0.18 + jitter * 0.22);
   }
   vec2 block = floor(uv * vec2(16.0, 10.0));
   float b = hash21(block + floor(t * 3.0));
-  if (b > 0.955 - hold * 0.03) {
+  if (b > 0.955 - jitter * 0.04) {
     uv.x = fract(uv.x + 0.12 + 0.2 * hash21(block + 3.2));
   }
   return uv;
@@ -97,6 +100,7 @@ vec3 iridescent(float n) {
 
 vec3 armature(vec2 uv, vec3 cam, float t, float hold) {
   vec2 p = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0);
+  p -= uPan * 0.12;
   float L = luma(cam);
   float r = length(p);
   float ring = abs(r - mix(0.18, 0.28, hold));
@@ -119,6 +123,7 @@ vec3 armature(vec2 uv, vec3 cam, float t, float hold) {
 
 vec3 cubic(vec2 uv, vec3 cam, float t, float hold) {
   vec2 p = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0);
+  p -= uPan * 0.18;
   float L = luma(cam);
   float scale = mix(3.4, 5.6, hold);
   vec2 q = p * scale;
@@ -199,8 +204,8 @@ vec3 undone(vec2 uv, vec3 cam, float t, float hold) {
 }
 
 void main() {
-  vec2 uv = shearUv(vUv, uTime, uHold * 0.65);
-  vec3 cam = sampleCamera(uv);
+  vec2 uv = shearUv(vUv + uPan * 0.03, uTime, uHold * 0.65);
+  vec3 cam = sampleCamera(vUv - uPan * 0.05);
   vec3 prev = texture(uPrev, vUv).rgb;
   float t = uTime;
   float hold = clamp(uHold, 0.0, 1.0);

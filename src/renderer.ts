@@ -16,6 +16,9 @@ export type FrameState = {
   hold: number;
   hasCamera: boolean;
   mirror: boolean;
+  panX: number;
+  panY: number;
+  energy: number;
   video: HTMLVideoElement | null;
 };
 
@@ -95,11 +98,15 @@ export class Renderer {
       "uHold",
       "uHasCamera",
       "uMirror",
+      "uPan",
+      "uEnergy",
     ]);
     this.present = loc(gl, createProgram(gl, quadVert, presentFrag), [
       "uImage",
       "uResolution",
       "uTime",
+      "uPan",
+      "uEnergy",
     ]);
 
     this.cameraTex = createCameraTexture(gl);
@@ -157,6 +164,8 @@ export class Renderer {
     set1(gl, this.phosphene, "uHold", state.hold);
     set1(gl, this.phosphene, "uHasCamera", state.hasCamera ? 1 : 0);
     set1(gl, this.phosphene, "uMirror", state.mirror ? 1 : 0);
+    set2(gl, this.phosphene, "uPan", state.panX, state.panY);
+    set1(gl, this.phosphene, "uEnergy", state.energy);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -167,6 +176,8 @@ export class Renderer {
     gl.uniform1i(this.present.uniforms.get("uImage") ?? null, 0);
     set2(gl, this.present, "uResolution", width, height);
     set1(gl, this.present, "uTime", state.time);
+    set2(gl, this.present, "uPan", state.panX, state.panY);
+    set1(gl, this.present, "uEnergy", state.energy);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     const swap = this.ping;

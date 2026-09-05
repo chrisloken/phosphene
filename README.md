@@ -2,7 +2,7 @@
 
 A camera art installation: **closed-eye vision inside black frames**.
 
-Phosphene is a fullscreen WebGL2 field built to sit with Ryan Rasmussen’s language — stacked armatures, neon, and glitch. The camera is optional. When the eye is open, the world shears into nested frames. When it is closed, the piece keeps running as dropped signal. Nothing is recorded or uploaded.
+Phosphene is a fullscreen WebGL2 field built to sit with Ryan Rasmussen’s language — stacked armatures, neon, and glitch. The camera is optional. When the eye is open, the world shears into nested frames. Phone tilt, and motion guessed from the camera feed, shift the cage so the overlays feel like they hang in the room. When it is closed, the piece keeps running as dropped signal. Nothing is recorded or uploaded.
 
 Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/phosphene/)
 
@@ -22,6 +22,7 @@ Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/pho
 - `H` hides the captions
 - `F` toggles fullscreen
 - **Open the camera** asks for the rear (`environment`) camera on phones, then falls back to whatever is available. Deny it and the field stays on dead air.
+- On a phone, tilt the device (Safari may ask for motion permission). With the camera open, panning the feed also slides nested frames at different depths. On desktop, move the pointer.
 
 ## Run locally
 
