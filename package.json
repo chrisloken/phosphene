@@ -1,9 +1,9 @@
 {
   "name": "phosphene",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Phosphene — closed-eye vision from an open camera. A WebGL2 installation.",
+  "description": "Phosphene — closed-eye vision inside black frames. A WebGL2 installation with pad, glitch, and gated mic delay.",
   "homepage": "https://chrisloken.github.io/phosphene/",
   "scripts": {
     "dev": "vite",

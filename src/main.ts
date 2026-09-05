@@ -1,4 +1,5 @@
 import "./style.css";
+import { createAudio } from "./audio";
 import { createCamera } from "./camera";
 import { createMotion } from "./motion";
 import { PROGRAMS } from "./programs";
@@ -36,6 +37,7 @@ try {
 
 const camera = createCamera();
 const motion = createMotion();
+const sound = createAudio();
 const armature = document.querySelector<HTMLElement>("#armature");
 let programIndex = 0;
 let hold = 0;
@@ -73,6 +75,15 @@ function enterField(): void {
   hud.hidden = false;
   hud.classList.toggle("is-dim", !hudVisible);
   void motion.requestAccess();
+  void (async () => {
+    await sound.start();
+    const mic = await sound.startMic();
+    if (mic === "live") {
+      showBanner("Pad open. Loud sound will pulse in the delay.");
+    } else if (mic === "denied") {
+      showBanner("Microphone blocked — pad still runs.");
+    }
+  })();
 }
 
 function setProgram(next: number): void {
@@ -124,6 +135,11 @@ window.addEventListener("keydown", (event) => {
     event.preventDefault();
     holdTarget = 1;
     enterField();
+    return;
+  }
+  if (event.key === "m" || event.key === "M") {
+    const muted = sound.toggleMuted();
+    showBanner(muted ? "Audio muted." : "Audio on.");
     return;
   }
   if (event.key === "h" || event.key === "H") {
@@ -187,6 +203,7 @@ function tick(now: number): void {
   hold += (holdTarget - hold) * 0.08;
   const live = camera.status === "live";
   const move = motion.sample(live ? camera.video : null, camera.mirror);
+  const pulse = sound.tick();
   if (armature) {
     armature.style.setProperty("--pan-x", move.panX.toFixed(4));
     armature.style.setProperty("--pan-y", move.panY.toFixed(4));
@@ -200,7 +217,7 @@ function tick(now: number): void {
     mirror: camera.mirror,
     panX: move.panX,
     panY: move.panY,
-    energy: move.energy,
+    energy: Math.min(1, move.energy + pulse * 0.4),
     video: camera.video,
   });
   requestAnimationFrame(tick);
