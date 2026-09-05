@@ -35,7 +35,7 @@ npm install
 npm run dev
 ```
 
-Then open the printed local URL (default `http://127.0.0.1:43147/`). A camera needs HTTPS or localhost. The remote view is `http://127.0.0.1:43147/?view=watch`. Local dev uses a WebSocket relay on the same port; the live GitHub Pages build finds peers over MQTT and WebRTC (same Wi‑Fi is the most reliable).
+Then open the printed local URL (default `http://127.0.0.1:43147/`). A camera needs HTTPS or localhost. The remote view is `http://127.0.0.1:43147/?view=watch`. Local dev runs a WebSocket signaling relay on port `43148`; the live GitHub Pages build finds peers over MQTT and WebRTC (same Wi‑Fi is the most reliable).
 
 ```bash
 npm run build

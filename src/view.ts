@@ -35,5 +35,5 @@ export function playHref(): string {
   return q ? `./?${q}` : "./";
 }
 
-export const SIGNAL_PATH = "/__phosphene_signal";
+export const SIGNAL_PORT = 43148;
 export const APP_ID = "phosphene-chrisloken";

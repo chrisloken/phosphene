@@ -1,5 +1,5 @@
 import type { JsonValue, Room } from "@trystero-p2p/core";
-import { APP_ID, SIGNAL_PATH } from "./view";
+import { APP_ID, SIGNAL_PORT } from "./view";
 
 export type MirrorRole = "session" | "watch";
 export type MirrorStatus = "idle" | "waiting" | "live" | "error";
@@ -65,7 +65,7 @@ async function openRoom(roomName: string): Promise<Room> {
       {
         appId: APP_ID,
         rtcConfig,
-        relayConfig: { urls: [`${proto}://${location.host}${SIGNAL_PATH}`] },
+        relayConfig: { urls: [`${proto}://${location.hostname}:${SIGNAL_PORT}`] },
       },
       roomName,
     );
