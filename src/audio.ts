@@ -60,19 +60,19 @@ export function createAudio(): AudioHandle {
       master = audio.createGain();
       master.gain.value = 0;
       const limiter = audio.createDynamicsCompressor();
-      limiter.threshold.value = -18;
-      limiter.knee.value = 12;
-      limiter.ratio.value = 6;
+      limiter.threshold.value = -6;
+      limiter.knee.value = 6;
+      limiter.ratio.value = 2.2;
       limiter.attack.value = 0.003;
       limiter.release.value = 0.22;
       master.connect(limiter);
       limiter.connect(audio.destination);
 
       const pad = audio.createGain();
-      pad.gain.value = 0.22;
+      pad.gain.value = 0.78;
       const padFilter = audio.createBiquadFilter();
       padFilter.type = "lowpass";
-      padFilter.frequency.value = 480;
+      padFilter.frequency.value = 1400;
       padFilter.Q.value = 0.55;
       pad.connect(padFilter);
       padFilter.connect(master);
@@ -81,7 +81,7 @@ export function createAudio(): AudioHandle {
       filterLfo.type = "sine";
       filterLfo.frequency.value = 0.037;
       const filterDepth = audio.createGain();
-      filterDepth.gain.value = 260;
+      filterDepth.gain.value = 420;
       filterLfo.connect(filterDepth);
       filterDepth.connect(padFilter.frequency);
       filterLfo.start();
@@ -90,7 +90,7 @@ export function createAudio(): AudioHandle {
       breath.type = "sine";
       breath.frequency.value = 0.08;
       const breathGain = audio.createGain();
-      breathGain.gain.value = 0.06;
+      breathGain.gain.value = 0.1;
       breath.connect(breathGain);
       breathGain.connect(pad.gain);
       breath.start();
@@ -103,7 +103,7 @@ export function createAudio(): AudioHandle {
         osc.frequency.value = freq;
         osc.detune.value = (index % 2 === 0 ? -5 : 6) + index;
         const voice = audio.createGain();
-        voice.gain.value = index < 3 ? 0.22 : 0.11;
+        voice.gain.value = index < 3 ? 0.65 : 0.4;
         const lfo = audio.createOscillator();
         lfo.type = "sine";
         lfo.frequency.value = 0.05 + index * 0.011;
@@ -125,7 +125,7 @@ export function createAudio(): AudioHandle {
       rumble.type = "lowpass";
       rumble.frequency.value = 140;
       const rumbleGain = audio.createGain();
-      rumbleGain.gain.value = 0.03;
+      rumbleGain.gain.value = 0.26;
       noise.connect(rumble);
       rumble.connect(rumbleGain);
       rumbleGain.connect(master);
@@ -134,7 +134,7 @@ export function createAudio(): AudioHandle {
       hiss.type = "highpass";
       hiss.frequency.value = 7200;
       const hissGain = audio.createGain();
-      hissGain.gain.value = 0.018;
+      hissGain.gain.value = 0.16;
       noise.connect(hiss);
       hiss.connect(hissGain);
       hissGain.connect(master);
@@ -165,12 +165,12 @@ export function createAudio(): AudioHandle {
 
       const now = audio.currentTime;
       master.gain.setValueAtTime(0, now);
-      master.gain.linearRampToValueAtTime(muted ? 0 : 0.42, now + 2.4);
+      master.gain.linearRampToValueAtTime(muted ? 0 : 1, now + 1.2);
 
       started = true;
-      nextGlitch = now + 7 + Math.random() * 10;
-      nextCrackle = now + 0.4;
-      nextScratch = now + 11 + Math.random() * 8;
+      nextGlitch = now + 3 + Math.random() * 5;
+      nextCrackle = now + 0.2;
+      nextScratch = now + 4 + Math.random() * 4;
     },
     async startMic() {
       if (!ctx || !master) {
@@ -215,9 +215,9 @@ export function createAudio(): AudioHandle {
         const feedback = ctx.createGain();
         feedback.gain.value = 0.62;
         const wet = ctx.createGain();
-        wet.gain.value = 0.5;
+        wet.gain.value = 1.15;
         const dry = ctx.createGain();
-        dry.gain.value = 0.28;
+        dry.gain.value = 1;
         source.connect(hipass);
         hipass.connect(analyser);
         analyser.connect(gate);
@@ -244,25 +244,25 @@ export function createAudio(): AudioHandle {
       const t = ctx.currentTime;
       if (crackleGain) {
         while (nextCrackle < t + 0.05) {
-          const amp = 0.04 + Math.random() * 0.1;
-          const dur = 0.004 + Math.random() * 0.018;
+          const amp = 0.38 + Math.random() * 0.37;
+          const dur = 0.006 + Math.random() * 0.03;
           crackleGain.gain.setValueAtTime(0.0001, nextCrackle);
           crackleGain.gain.linearRampToValueAtTime(amp, nextCrackle + 0.001);
           crackleGain.gain.exponentialRampToValueAtTime(0.0001, nextCrackle + dur);
-          nextCrackle += 0.12 + Math.random() * 1.8;
+          nextCrackle += 0.08 + Math.random() * 0.9;
         }
       }
       if (scratchGain && t >= nextScratch) {
         const dur = 0.05 + Math.random() * 0.12;
         scratchGain.gain.cancelScheduledValues(t);
         scratchGain.gain.setValueAtTime(0.0001, t);
-        scratchGain.gain.linearRampToValueAtTime(0.08 + Math.random() * 0.07, t + 0.01);
+        scratchGain.gain.linearRampToValueAtTime(0.45 + Math.random() * 0.3, t + 0.01);
         scratchGain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-        nextScratch = t + 8 + Math.random() * 16;
+        nextScratch = t + 4 + Math.random() * 8;
       }
       if (t >= nextGlitch) {
         fireGlitch(ctx, master, t);
-        nextGlitch = t + 6 + Math.random() * 16;
+        nextGlitch = t + 3 + Math.random() * 8;
       }
       return tickMic();
     },
@@ -270,7 +270,7 @@ export function createAudio(): AudioHandle {
       muted = !muted;
       if (master && ctx) {
         master.gain.cancelScheduledValues(ctx.currentTime);
-        master.gain.setTargetAtTime(muted ? 0 : 0.42, ctx.currentTime, 0.08);
+        master.gain.setTargetAtTime(muted ? 0 : 1, ctx.currentTime, 0.08);
       }
       return muted;
     },
@@ -282,7 +282,7 @@ export function createAudio(): AudioHandle {
     osc.frequency.value = 120 + Math.random() * 1400;
     const g = audio.createGain();
     g.gain.setValueAtTime(0.0001, at);
-    g.gain.linearRampToValueAtTime(0.07 + Math.random() * 0.05, at + 0.004);
+    g.gain.linearRampToValueAtTime(0.4 + Math.random() * 0.3, at + 0.004);
     g.gain.exponentialRampToValueAtTime(0.0001, at + 0.03 + Math.random() * 0.07);
     const crush = audio.createWaveShaper();
     crush.curve = makeCrushCurve();
