@@ -79,7 +79,7 @@ function enterField(): void {
     await sound.start();
     const mic = await sound.startMic();
     if (mic === "live") {
-      showBanner("Pad open. Loud sound will pulse in the delay.");
+      showBanner("Pad open. Microphone is live in the delay mix.");
     } else if (mic === "denied") {
       showBanner("Microphone blocked — pad still runs.");
     }

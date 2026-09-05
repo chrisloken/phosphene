@@ -2,7 +2,7 @@
 
 A camera art installation: **closed-eye vision inside black frames**.
 
-Phosphene is a fullscreen WebGL2 field built to sit with Ryan Rasmussen’s language — stacked armatures, neon, and glitch. The camera is optional. When the eye is open, the world shears into nested frames. Phone tilt, and motion guessed from the camera feed, shift the cage so the overlays feel like they hang in the room. A soothing pad runs under the image, with vinyl crackle and occasional digital glitches. If the microphone hears a loud enough sound, that sound is gated into a long feedback delay so it returns as a rhythmic pulse. Nothing is recorded or uploaded.
+Phosphene is a fullscreen WebGL2 field built to sit with Ryan Rasmussen’s language — stacked armatures, neon, and glitch. The camera is optional. When the eye is open, the world shears into nested frames. Phone tilt, and motion guessed from the camera feed, shift the cage so the overlays feel like they hang in the room. A soothing pad runs under the image, with vinyl crackle and occasional digital glitches. The microphone is mixed into that bed through a long feedback delay so the room returns as a rhythmic pulse. The loudness gate is off for testing, so all mic sound gets through. Nothing is recorded or uploaded.
 
 Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/phosphene/)
 
@@ -24,7 +24,7 @@ Current release is **v2**. Source tag `v1.0.0` is the silent armature/glitch cut
 - `H` hides the captions
 - `F` toggles fullscreen
 - **Open the camera** asks for the rear (`environment`) camera on phones, then falls back to whatever is available. Deny it and the field stays on dead air.
-- Entering the field starts the pad and asks for the **microphone**. Quiet rooms stay on the pad; loud sounds enter a 1.7s delay with feedback. `M` mutes.
+- Entering the field starts the pad and asks for the **microphone**. Mic audio is mixed with the pad through a 1.7s delay with feedback (gate off for testing). `M` mutes.
 - On a phone, tilt the device (Safari may ask for motion permission). With the camera open, panning the feed also slides nested frames at different depths. On desktop, move the pointer.
 
 ## Run locally

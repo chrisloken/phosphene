@@ -35,7 +35,6 @@ export function createAudio(): AudioHandle {
   let started = false;
   let muted = false;
   let micStatus: MicStatus = "idle";
-  let gateLevel = 0;
   let nextGlitch = 0;
   let nextCrackle = 0;
   let nextScratch = 0;
@@ -206,7 +205,7 @@ export function createAudio(): AudioHandle {
         analyser.smoothingTimeConstant = 0.6;
         analyserData = new Float32Array(new ArrayBuffer(analyser.fftSize * 4));
         gate = ctx.createGain();
-        gate.gain.value = 0;
+        gate.gain.value = 1;
         const delay = ctx.createDelay(4);
         delay.delayTime.value = 1.72;
         const loopFilter = ctx.createBiquadFilter();
@@ -216,9 +215,9 @@ export function createAudio(): AudioHandle {
         const feedback = ctx.createGain();
         feedback.gain.value = 0.62;
         const wet = ctx.createGain();
-        wet.gain.value = 0.55;
+        wet.gain.value = 0.5;
         const dry = ctx.createGain();
-        dry.gain.value = 0.06;
+        dry.gain.value = 0.28;
         source.connect(hipass);
         hipass.connect(analyser);
         analyser.connect(gate);
@@ -295,7 +294,7 @@ export function createAudio(): AudioHandle {
   }
 
   function tickMic(): number {
-    if (!analyser || !gate || !ctx || !analyserData) {
+    if (!analyser || !ctx || !analyserData) {
       return 0;
     }
     analyser.getFloatTimeDomainData(analyserData);
@@ -305,11 +304,7 @@ export function createAudio(): AudioHandle {
       sum += s * s;
     }
     const rms = Math.sqrt(sum / analyserData.length);
-    const open = rms > 0.045 ? 1 : 0;
-    const coeff = open > gateLevel ? 0.28 : 0.045;
-    gateLevel += (open - gateLevel) * coeff;
-    gate.gain.setTargetAtTime(gateLevel * 0.85, ctx.currentTime, 0.04);
-    return gateLevel;
+    return clamp(rms * 4, 0, 1);
   }
 
   return handle;
