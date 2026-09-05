@@ -45,6 +45,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
   git add -A
   git -c user.name="${GIT_AUTHOR_NAME:-Cursor Agent}" \
       -c user.email="${GIT_AUTHOR_EMAIL:-cursoragent@cursor.com}" \
+      -c commit.gpgsign=false \
       commit -m "Publish Phosphene to GitHub Pages"
 fi
 
@@ -102,7 +103,7 @@ else
 fi
 
 echo "Pushing ${BRANCH}…"
-git push -u github "HEAD:refs/heads/${BRANCH}"
+git push github "HEAD:refs/heads/${BRANCH}"
 
 echo "Deploying ${GH_PAGES_BRANCH} from dist/…"
 WORK="$(mktemp -d)"
@@ -115,6 +116,7 @@ git -C "$WORK" add -A
 git -C "$WORK" \
   -c user.name="${GIT_AUTHOR_NAME:-Cursor Agent}" \
   -c user.email="${GIT_AUTHOR_EMAIL:-cursoragent@cursor.com}" \
+  -c commit.gpgsign=false \
   commit -m "Deploy Phosphene to GitHub Pages"
 git -C "$WORK" remote add origin "$REMOTE_URL"
 git -C "$WORK" push -f origin "$GH_PAGES_BRANCH"
