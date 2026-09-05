@@ -77,6 +77,7 @@ body {
 
 #fatal,
 #mast,
+#mast-watch,
 #hud,
 #banner {
   position: fixed;
@@ -106,10 +107,25 @@ body {
   transition: opacity 500ms ease, transform 500ms ease;
 }
 
-#mast.is-gone {
+#mast.is-gone,
+#mast-watch.is-gone {
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
+}
+
+#mast-watch {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: max(28px, env(safe-area-inset-top)) max(32px, env(safe-area-inset-right))
+    max(32px, env(safe-area-inset-bottom)) max(32px, env(safe-area-inset-left));
+  background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.55) 36%, rgb(0 0 0 / 0.92) 100%);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+#mast-watch[hidden] {
+  display: none;
 }
 
 .kicker {
@@ -146,7 +162,8 @@ h1 {
   pointer-events: auto;
 }
 
-button {
+button,
+a.ghost {
   appearance: none;
   border: 2px solid var(--paper);
   background: var(--paper);
@@ -158,24 +175,31 @@ button {
   padding: 12px 16px;
   border-radius: 0;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
-button.ghost {
+button.ghost,
+a.ghost {
   background: transparent;
   color: var(--paper);
 }
 
-button:hover {
+button:hover,
+a.ghost:hover {
   border-color: var(--cyan);
   color: var(--void);
   background: var(--cyan);
 }
 
-button.ghost:hover {
+button.ghost:hover,
+a.ghost:hover {
   color: var(--void);
 }
 
-button:focus-visible {
+button:focus-visible,
+a.ghost:focus-visible {
   outline: 2px solid var(--magenta);
   outline-offset: 3px;
 }
@@ -264,6 +288,21 @@ button:focus-visible {
   display: none;
 }
 
+#remote-eye {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  opacity: 0.02;
+  pointer-events: none;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+body.is-watch .play-only {
+  display: none;
+}
+
 @media (max-width: 720px) {
   :root {
     --frame: 8px;
@@ -274,7 +313,8 @@ button:focus-visible {
     box-shadow: 12px -10px 0 0 #000, inset 0 0 0 2px #141414;
   }
 
-  #mast {
+  #mast,
+  #mast-watch {
     padding: max(20px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right))
       max(20px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
   }

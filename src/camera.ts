@@ -2,6 +2,7 @@ export type CameraStatus = "idle" | "requesting" | "live" | "denied" | "missing"
 
 export type CameraHandle = {
   video: HTMLVideoElement;
+  stream: MediaStream | null;
   status: CameraStatus;
   error: string | null;
   facingMode: string | null;
@@ -46,6 +47,9 @@ export function createCamera(): CameraHandle {
   let stream: MediaStream | null = null;
   const handle: CameraHandle = {
     video,
+    get stream() {
+      return stream;
+    },
     status: "idle",
     error: null,
     facingMode: null,

@@ -25,6 +25,7 @@ Current release is **v2**. Source tag `v1.0.0` is the silent armature/glitch cut
 - `F` toggles fullscreen
 - **Open the camera** asks for the rear (`environment`) camera on phones, then falls back to whatever is available. Deny it and the field stays on dead air.
 - Entering the field starts the pad and asks for the **microphone**. Mic audio is mixed with the pad through a 1.7s delay with feedback (gate off for testing). `M` mutes.
+- **Watch a session** opens a remote view. It stays on the default field until someone enters Phosphene from another device, then mirrors that session’s programs, camera, and sound. Pair a phone (session) with a laptop or gallery screen (`?view=watch`). Optional `?room=` keeps separate rooms apart.
 - On a phone, tilt the device (Safari may ask for motion permission). With the camera open, panning the feed also slides nested frames at different depths. On desktop, move the pointer.
 
 ## Run locally
@@ -34,7 +35,7 @@ npm install
 npm run dev
 ```
 
-Then open the printed local URL (default `http://127.0.0.1:43147/`). A camera needs HTTPS or localhost.
+Then open the printed local URL (default `http://127.0.0.1:43147/`). A camera needs HTTPS or localhost. The remote view is `http://127.0.0.1:43147/?view=watch`. Local dev uses a WebSocket relay on the same port; the live GitHub Pages build finds peers over MQTT and WebRTC (same Wi‑Fi is the most reliable).
 
 ```bash
 npm run build

@@ -42,8 +42,24 @@
       <div class="actions">
         <button type="button" id="open-eye">Open the camera</button>
         <button type="button" id="enter" class="ghost">Enter on dead air</button>
+        <a class="ghost" id="watch-link" href="./?view=watch">Watch a session</a>
       </div>
       <p class="fine" id="cam-status">Camera and microphone stay off until you allow them. Nothing is recorded or uploaded.</p>
+    </div>
+
+    <div id="mast-watch" hidden>
+      <p class="kicker">Remote view</p>
+      <h1>Phosphene</h1>
+      <p class="lede">
+        This screen holds the default field until someone enters from another
+        device. Then it mirrors that session — the programs, the phone camera,
+        and the sound.
+      </p>
+      <div class="actions">
+        <button type="button" id="hold-watch">Hold this screen</button>
+        <a class="ghost" id="play-link" href="./">Start a session instead</a>
+      </div>
+      <p class="fine">Nothing is recorded. On a phone, open Phosphene and enter the field.</p>
     </div>
 
     <div id="hud" hidden>
@@ -55,16 +71,19 @@
         </div>
       </div>
       <div class="hud-keys">
-        <span>1–5 programs</span>
-        <span>click / tap to cycle</span>
-        <span>tilt / pan to shift the cage</span>
-        <span>hold space to glitch</span>
+        <span class="play-only">1–5 programs</span>
+        <span class="play-only">click / tap to cycle</span>
+        <span class="play-only">tilt / pan to shift the cage</span>
+        <span class="play-only">hold space to glitch</span>
         <span>M mute</span>
         <span>H hide UI</span>
+        <span id="link-note">remote view waiting</span>
       </div>
     </div>
 
     <div id="banner" hidden role="status"></div>
+
+    <video id="remote-eye" playsinline webkit-playsinline autoplay></video>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

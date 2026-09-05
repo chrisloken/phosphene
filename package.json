@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Phosphene — closed-eye vision inside black frames. A WebGL2 installation with pad, glitch, and gated mic delay.",
+  "description": "Phosphene — closed-eye vision inside black frames. A WebGL2 installation with pad, glitch, mic delay, and a remote session mirror.",
   "homepage": "https://chrisloken.github.io/phosphene/",
   "scripts": {
     "dev": "vite",
@@ -14,5 +14,10 @@
   "devDependencies": {
     "typescript": "~5.9.2",
     "vite": "^7.1.5"
+  },
+  "dependencies": {
+    "@trystero-p2p/mqtt": "^0.25.4",
+    "@trystero-p2p/ws-relay": "^0.25.4",
+    "trystero": "^0.25.4"
   }
 }

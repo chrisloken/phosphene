@@ -7,6 +7,7 @@ export type AudioHandle = {
   startMic: () => Promise<MicStatus>;
   tick: () => number;
   toggleMuted: () => boolean;
+  captureStream: () => MediaStream | null;
 };
 
 function clamp(value: number, min: number, max: number): number {
@@ -29,6 +30,8 @@ function noiseBuffer(ctx: AudioContext, seconds: number): AudioBuffer {
 export function createAudio(): AudioHandle {
   let ctx: AudioContext | null = null;
   let master: GainNode | null = null;
+  let localOut: GainNode | null = null;
+  let sendDest: MediaStreamAudioDestinationNode | null = null;
   let gate: GainNode | null = null;
   let analyser: AnalyserNode | null = null;
   let analyserData: Float32Array<ArrayBuffer> | null = null;
@@ -65,8 +68,13 @@ export function createAudio(): AudioHandle {
       limiter.ratio.value = 2.2;
       limiter.attack.value = 0.003;
       limiter.release.value = 0.22;
+      localOut = audio.createGain();
+      localOut.gain.value = muted ? 0 : 1;
+      sendDest = audio.createMediaStreamDestination();
       master.connect(limiter);
-      limiter.connect(audio.destination);
+      limiter.connect(localOut);
+      localOut.connect(audio.destination);
+      limiter.connect(sendDest);
 
       const pad = audio.createGain();
       pad.gain.value = 0.78;
@@ -268,11 +276,14 @@ export function createAudio(): AudioHandle {
     },
     toggleMuted() {
       muted = !muted;
-      if (master && ctx) {
-        master.gain.cancelScheduledValues(ctx.currentTime);
-        master.gain.setTargetAtTime(muted ? 0 : 1, ctx.currentTime, 0.08);
+      if (localOut && ctx) {
+        localOut.gain.cancelScheduledValues(ctx.currentTime);
+        localOut.gain.setTargetAtTime(muted ? 0 : 1, ctx.currentTime, 0.08);
       }
       return muted;
+    },
+    captureStream() {
+      return sendDest?.stream ?? null;
     },
   };
 
