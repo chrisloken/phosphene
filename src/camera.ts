@@ -4,9 +4,36 @@ export type CameraHandle = {
   video: HTMLVideoElement;
   status: CameraStatus;
   error: string | null;
+  facingMode: string | null;
+  mirror: boolean;
   start: () => Promise<CameraStatus>;
   stop: () => void;
 };
+
+const SIZE = {
+  width: { ideal: 1280 },
+  height: { ideal: 720 },
+};
+
+async function openRearCamera(): Promise<MediaStream> {
+  try {
+    return await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        facingMode: { exact: "environment" },
+        ...SIZE,
+      },
+    });
+  } catch {
+    return await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        facingMode: { ideal: "environment" },
+        ...SIZE,
+      },
+    });
+  }
+}
 
 export function createCamera(): CameraHandle {
   const video = document.createElement("video");
@@ -21,6 +48,8 @@ export function createCamera(): CameraHandle {
     video,
     status: "idle",
     error: null,
+    facingMode: null,
+    mirror: false,
     async start() {
       if (handle.status === "live") {
         return handle.status;
@@ -33,14 +62,11 @@ export function createCamera(): CameraHandle {
       handle.status = "requesting";
       handle.error = null;
       try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          audio: false,
-          video: {
-            facingMode: "user",
-            width: { ideal: 1280 },
-            height: { ideal: 720 },
-          },
-        });
+        stream = await openRearCamera();
+        const track = stream.getVideoTracks()[0];
+        const facing = track?.getSettings().facingMode ?? null;
+        handle.facingMode = facing;
+        handle.mirror = facing === "user";
         video.srcObject = stream;
         await video.play();
         handle.status = "live";
@@ -65,6 +91,8 @@ export function createCamera(): CameraHandle {
       stream = null;
       video.srcObject = null;
       handle.status = "idle";
+      handle.facingMode = null;
+      handle.mirror = false;
     },
   };
   return handle;

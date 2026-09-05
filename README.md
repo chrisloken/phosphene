@@ -21,7 +21,7 @@ Live: [https://chrisloken.github.io/phosphene/](https://chrisloken.github.io/pho
 - Hold **space** (or press and hold) to increase interference
 - `H` hides the captions
 - `F` toggles fullscreen
-- **Open the camera** asks for `getUserMedia`. Deny it and the field stays on dead air.
+- **Open the camera** asks for the rear (`environment`) camera on phones, then falls back to whatever is available. Deny it and the field stays on dead air.
 
 ## Run locally
 

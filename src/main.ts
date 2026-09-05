@@ -187,6 +187,7 @@ function tick(now: number): void {
     intensity: 1,
     hold,
     hasCamera: camera.status === "live",
+    mirror: camera.mirror,
     video: camera.video,
   });
   requestAnimationFrame(tick);

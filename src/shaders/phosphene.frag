@@ -13,6 +13,7 @@ uniform float uMode;
 uniform float uIntensity;
 uniform float uHold;
 uniform float uHasCamera;
+uniform float uMirror;
 
 const vec3 MAG = vec3(1.0, 0.04, 0.72);
 const vec3 CYN = vec3(0.0, 0.92, 1.0);
@@ -57,7 +58,7 @@ vec2 coverUv(vec2 uv, vec2 content, vec2 frame) {
     float s = ca / ra;
     st.y = (uv.y - 0.5) / s + 0.5;
   }
-  st.x = 1.0 - st.x;
+  st.x = mix(st.x, 1.0 - st.x, uMirror);
   return st;
 }
 

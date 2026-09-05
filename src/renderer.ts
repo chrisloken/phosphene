@@ -15,6 +15,7 @@ export type FrameState = {
   intensity: number;
   hold: number;
   hasCamera: boolean;
+  mirror: boolean;
   video: HTMLVideoElement | null;
 };
 
@@ -93,6 +94,7 @@ export class Renderer {
       "uIntensity",
       "uHold",
       "uHasCamera",
+      "uMirror",
     ]);
     this.present = loc(gl, createProgram(gl, quadVert, presentFrag), [
       "uImage",
@@ -154,6 +156,7 @@ export class Renderer {
     set1(gl, this.phosphene, "uIntensity", state.intensity);
     set1(gl, this.phosphene, "uHold", state.hold);
     set1(gl, this.phosphene, "uHasCamera", state.hasCamera ? 1 : 0);
+    set1(gl, this.phosphene, "uMirror", state.mirror ? 1 : 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
